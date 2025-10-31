@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('rules', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->string('description');
+            $table->foreignId('category_id')->constrained()->cascadeOnDelete(); // PHP Laravel Blade
+            $table->string('type'); // free | paid
+            $table->unsignedInteger('downloads')->default(0);
+            $table->decimal('rating', 2, 1)->default(0); // e.g. 4.8
+            $table->json('metadata')->nullable(); // optional extra data (tags, versions, etc.)
+            $table->string('status');
             $table->timestamps();
         });
-    }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('rules');
     }
 };
