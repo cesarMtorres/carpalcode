@@ -2,24 +2,23 @@
 
 namespace App\Actions\Rules;
 
+use Exception;
 use PhpParser\ParserFactory;
 
 class TryCode
 {
-    /**
-     * Validate and create a newly registered user.
-     */
+    /** Validate and create a newly registered user. */
     public function validate(string $code): array
     {
         $status = 'success';
         $message = 'valid code';
 
-        rescue(function () use ($code) {
+        rescue(function () use ($code): void {
 
             $parser = (new ParserFactory)->createForNewestSupportedVersion();
             $parser->parse($code);
 
-        }, function () use (&$status, &$message) {
+        }, function () use (&$status, &$message): void {
             $status = 'error';
             $message = 'Error on code';
         });
@@ -57,7 +56,7 @@ class TryCode
                 'result' => $result,
             ];
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return [
                 'success' => false,
                 'output' => '',

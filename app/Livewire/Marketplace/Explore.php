@@ -23,10 +23,11 @@ class Explore extends Component
         return view('livewire.marketplace.explore', ['rules' => $this->rules]);
     }
 
-    public function updatedSearch()
+    public function updatedSearch(): void
     {
         $this->rules = collect($this->allRules)
-            ->when($this->search, fn ($q) => $q->filter(fn ($r) => str_contains(strtolower($r['title']), strtolower($this->search))
+            ->when($this->search, fn ($q) => $q->filter(
+                fn ($r) => str_contains(strtolower($r['title']), strtolower($this->search))
             ))
             ->when($this->filter, fn ($q) => $q->where('type', $this->filter))
             ->values()

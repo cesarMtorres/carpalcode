@@ -2,6 +2,7 @@
 
 namespace App\Actions\Socialite;
 
+use RuntimeException;
 use Symfony\Component\Process\Process;
 
 class CloneRepositoryAction
@@ -17,8 +18,8 @@ class CloneRepositoryAction
         $process = new Process(['git', 'clone', '--depth=1', $authUrl, $tempPath]);
         $process->run();
 
-        if (! $process->isSuccessful()) {
-            throw new \RuntimeException('Failed to clone repository: '.$process->getErrorOutput());
+        if ( ! $process->isSuccessful()) {
+            throw new RuntimeException('Failed to clone repository: '.$process->getErrorOutput());
         }
 
         return $tempPath;

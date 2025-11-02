@@ -9,7 +9,7 @@ final class CreateProject
 {
     public function handle(Project $project, array $attributes): Project
     {
-        DB::transaction(function () use ($project, $attributes) {
+        DB::transaction(function () use ($project, $attributes): void {
 
             $project = Project::create([
                 'owner' => $attributes['owner'],

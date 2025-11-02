@@ -14,7 +14,7 @@ class RuleShow extends Component
 
     public string $output = '';
 
-    public function mount($id)
+    public function mount($id): void
     {
         $this->rule = Rule::find($id)->toArray();
     }
@@ -24,10 +24,16 @@ class RuleShow extends Component
         return view('livewire.marketplace.rule-show');
     }
 
-    public function tryRule()
+    public function tryRule(): void
     {
         $tryCode = new TryCode;
         $validated = $tryCode->validate($this->ruleInput);
+
+        if ( ! $validated) {
+            $this->output = 'Invalid input';
+
+            return;
+        }
 
         $executor = $tryCode->execute($this->ruleInput);
 

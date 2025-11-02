@@ -17,5 +17,5 @@ Route::get('dashboard', function () {
 require __DIR__.'/settings.php';
 require __DIR__.'/socialite.php';
 
-Route::get('/marketplace', \App\Livewire\Marketplace\Explore::class)->name('marketplace');
-Route::get('/marketplace/{id}', \App\Livewire\Marketplace\RuleShow::class)->name('rule.show');
+Route::get('/marketplace', App\Livewire\Marketplace\Explore::class)->name('marketplace');
+Route::get('/marketplace/{id}', App\Livewire\Marketplace\RuleShow::class)->name('rule.show');

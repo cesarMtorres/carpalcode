@@ -9,39 +9,33 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
-    public function register(): void
-    {
-        //
-    }
+    /** Register any application services. */
+    public function register(): void {}
 
-    /**
-     * Bootstrap any application services.
-     */
+    /** Bootstrap any application services. */
     public function boot(): void
     {
         $this->configureCommand();
         $this->configureModels();
+        $this->configureUrl();
     }
 
-    private function configureCommand()
+    private function configureCommand(): void
     {
         DB::prohibitDestructiveCommands(
             $this->app->isProduction(),
         );
     }
 
-    private function configureModels()
+    private function configureModels(): void
     {
         Model::shouldBeStrict();
 
         Model::unguard();
     }
 
-    private function configureUrl()
+    private function configureUrl(): void
     {
-        URL::forceScheme('https');
+        // URL::forceScheme('https');
     }
 }
