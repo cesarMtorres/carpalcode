@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Marketplace;
 
+use App\Models\Rule;
 use Livewire\Component;
 
 class Explore extends Component
@@ -12,25 +13,23 @@ class Explore extends Component
 
     public array $rules = [];
 
-    public function mount()
+    public function mount(): void
     {
-        // Simulamos reglas de ejemplo (mock)
-        $this->rules = [
-            ['id' => 1, 'title' => 'Collective to Spatie HTML', 'type' => 'free', 'downloads' => 230, 'rating' => 4.8],
-            ['id' => 2, 'title' => 'Migrate Eloquent to Query Builder', 'type' => 'premium', 'downloads' => 120, 'rating' => 4.9],
-            ['id' => 3, 'title' => 'Blade Components to Volt', 'type' => 'free', 'downloads' => 400, 'rating' => 4.7],
-        ];
-
+        $this->rules = Rule::all()->toArray();
     }
 
     public function render()
     {
-        $rules = collect($this->rules)
-            ->when($this->search, fn ($q) => $q->filter(fn ($r) => str_contains(strtolower($r['title']), strtolower($this->search))))
+        return view('livewire.marketplace.explore', ['rules' => $this->rules]);
+    }
+
+    public function updatedSearch()
+    {
+        $this->rules = collect($this->allRules)
+            ->when($this->search, fn ($q) => $q->filter(fn ($r) => str_contains(strtolower($r['title']), strtolower($this->search))
+            ))
             ->when($this->filter, fn ($q) => $q->where('type', $this->filter))
             ->values()
             ->toArray();
-
-        return view('livewire.marketplace.explore', ['rules' => $rules]);
     }
 }

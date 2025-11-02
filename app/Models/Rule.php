@@ -9,4 +9,9 @@ class Rule extends Model
 {
     /** @use HasFactory<\Database\Factories\RuleFactory> */
     use HasFactory;
+
+    public function categories()
+    {
+        return $this->belongsToMany(Category::class);
+    }
 }
