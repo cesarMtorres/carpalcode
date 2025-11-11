@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -10,9 +12,9 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, TwoFactorAuthenticatable;
-
+    use HasFactory;
+    use Notifiable;
+    use TwoFactorAuthenticatable;
     /**
      * The attributes that are mass assignable.
      *
@@ -35,6 +37,40 @@ class User extends Authenticatable
         'two_factor_recovery_codes',
         'remember_token',
     ];
+
+    // Relaciones
+    public function githubTokens()
+    {
+        return $this->hasMany(GithubToken::class);
+    }
+
+    public function githubExecutions()
+    {
+        return $this->hasMany(GithubExecution::class);
+    }
+
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class)->withTimestamps();
+    }
+
+    public function purchasedRules()
+    {
+        return $this->belongsToMany(Rule::class, 'user_rules')
+            ->withPivot('purchased_at', 'price')
+            ->withTimestamps();
+    }
+
+    // Método para obtener estadísticas del usuario
+    protected function getStatsAttribute(): array
+    {
+        return [
+            'total_projects' => $this->projects()->count(),
+            'total_repositories' => $this->githubExecutions()->distinct('repo_name')->count(),
+            'successful_clones' => $this->githubExecutions()->where('status', 'completed')->count(),
+            'purchased_rules_count' => $this->purchasedRules()->count(),
+        ];
+    }
 
     /**
      * Get the attributes that should be cast.

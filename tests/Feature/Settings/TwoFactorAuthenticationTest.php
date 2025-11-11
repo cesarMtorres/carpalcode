@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\User;
 use Inertia\Testing\AssertableInertia as Assert;
 use Laravel\Fortify\Features;
@@ -20,7 +22,7 @@ test('two factor settings page can be rendered', function (): void {
         ->withSession(['auth.password_confirmed_at' => time()])
         ->get(route('two-factor.show'))
         ->assertInertia(
-            fn (Assert $page) => $page
+            fn (Assert $page): Assert => $page
                 ->component('settings/TwoFactor')
                 ->where('twoFactorEnabled', false)
         );
@@ -60,7 +62,7 @@ test('two factor settings page does not requires password confirmation when disa
         ->get(route('two-factor.show'))
         ->assertOk()
         ->assertInertia(
-            fn (Assert $page) => $page
+            fn (Assert $page): Assert => $page
                 ->component('settings/TwoFactor')
         );
 });

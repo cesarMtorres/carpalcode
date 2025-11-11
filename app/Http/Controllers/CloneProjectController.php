@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Actions\Socialite\CloneRepositoryAction;
@@ -9,7 +11,7 @@ class CloneProjectController extends Controller
 {
     public function index(CloneRepositoryAction $action, string $userName, string $repo)
     {
-        $repoUrl = "https://github.com/{$userName}/{$repo}.git";
+        $repoUrl = sprintf('https://github.com/%s/%s.git', $userName, $repo);
 
         $path = $action->handle($user, $repoUrl);
 

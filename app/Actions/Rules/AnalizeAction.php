@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Actions\Rules;
 
 use Illuminate\Support\Facades\Storage;
@@ -7,9 +9,9 @@ use Symfony\Component\Process\Process;
 
 final class AnalizeAction
 {
-    public function handle(string $project)
+    public function handle(string $project): string|array
     {
-        $path = Storage::path("projects/{$project}");
+        $path = Storage::path('projects/' . $project);
 
         if ( ! is_dir($path)) {
             return 'No existe';
@@ -19,7 +21,6 @@ final class AnalizeAction
             'vendor/bin/rector',
             'process',
             $path,
-            '--dry-run',
             '--ansi',
             '--no-progress-bar',
         ]);

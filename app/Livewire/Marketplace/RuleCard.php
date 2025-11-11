@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Marketplace;
 
 use Livewire\Attributes\On;
@@ -16,10 +18,10 @@ class RuleCard extends Component
             return;
         }
 
-        return redirect()->route('rule.show', ['id' => $data['id']]);
+        return to_route('rule.show', ['id' => $data['id']]);
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         return view('livewire.marketplace.rule-card');
     }

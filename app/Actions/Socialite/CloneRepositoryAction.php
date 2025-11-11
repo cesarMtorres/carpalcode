@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Actions\Socialite;
 
 use RuntimeException;
@@ -13,7 +15,7 @@ class CloneRepositoryAction
         $tempPath = storage_path('app/tmp/repos/'.uniqid());
 
         // Agrega el token al URL (para acceso seguro)
-        $authUrl = str_replace('https://', "https://{$token}@", $repoUrl);
+        $authUrl = str_replace('https://', sprintf('https://%s@', $token), $repoUrl);
 
         $process = new Process(['git', 'clone', '--depth=1', $authUrl, $tempPath]);
         $process->run();

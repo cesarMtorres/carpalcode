@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Actions\Project;
 
 use App\Models\Project;
@@ -11,7 +13,7 @@ final class CreateProject
     {
         DB::transaction(function () use ($project, $attributes): void {
 
-            $project = Project::create([
+            $project = Project::query()->create([
                 'owner' => $attributes['owner'],
                 'repo' => $attributes['repo'],
                 'cloned_path' => $attributes['cloned_path'],

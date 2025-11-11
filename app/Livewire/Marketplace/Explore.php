@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Marketplace;
 
 use App\Models\Rule;
@@ -13,21 +15,34 @@ class Explore extends Component
 
     public array $rules = [];
 
+    public array $allRules = [];
+
     public function mount(): void
     {
-        $this->rules = Rule::all()->toArray();
+        $this->allRules = Rule::all()->toArray();
+        $this->rules = $this->allRules;
     }
 
-    public function render()
+    public function render(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
     {
         return view('livewire.marketplace.explore', ['rules' => $this->rules]);
     }
 
     public function updatedSearch(): void
     {
-        $this->rules = collect($this->allRules)
+        $this->applyFilters();
+    }
+
+    public function updatedFilter(): void
+    {
+        $this->applyFilters();
+    }
+
+    private function applyFilters(): void
+    {
+        $this->rules = collect($this->allRules ?? $this->rules)
             ->when($this->search, fn ($q) => $q->filter(
-                fn ($r) => str_contains(strtolower($r['title']), strtolower($this->search))
+                fn ($r): bool => str_contains(strtolower((string) $r['title']), strtolower($this->search))
             ))
             ->when($this->filter, fn ($q) => $q->where('type', $this->filter))
             ->values()

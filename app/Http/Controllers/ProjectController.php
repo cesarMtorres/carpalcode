@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Actions\Project\CreateProject;
@@ -8,6 +10,8 @@ use App\Models\Project;
 
 final readonly class ProjectController
 {
+    public $projectManager;
+
     public function store(CreateProjectRequest $request, Project $project, CreateProject $action)
     {
         $project = $action->handle($project, $request->array('attributes'));

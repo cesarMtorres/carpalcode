@@ -1,4 +1,7 @@
 <div>
+    <!-- Menú de navegación -->
+    <x-navigation-menu />
+
     <div class="min-h-screen bg-gray-50 py-10 px-6">
         <div class="max-w-7xl mx-auto">
             <div class="flex flex-col sm:flex-row justify-between items-center mb-8">
@@ -15,7 +18,7 @@
                         <select wire:model.live="filter" class="rounded-lg border border-gray-300 px-3 py-2">
                             <option value="">All</option>
                             <option value="free">Free</option>
-                            <option value="premium">Premium</option>
+                            <option value="premiun">Premium</option>
                         </select>
                     </div>
                 </div>
@@ -32,5 +35,6 @@
                 <p class="text-gray-500 text-center mt-10">No rules found.</p>
             @endif
         </div>
+
     </div>
 </div>

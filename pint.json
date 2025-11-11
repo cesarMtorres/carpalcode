@@ -1,12 +1,16 @@
 {
     "preset": "laravel",
     "exclude": ["config", "build"],
-    "notPath": ["ray.php"],
+    "notPath": [
+        "tests/TestCase.php",
+        "tmp"
+    ],
     "rules": {
         "simplified_null_return": true,
         "align_multiline_comment": true,
         "array_indentation": true,
         "array_syntax": true,
+        "declare_strict_types": true,
         "assign_null_coalescing_to_coalesce_equal": true,
         "binary_operator_spaces": true,
         "blank_line_before_statement": {
@@ -25,14 +29,50 @@
                 "method": "one"
             }
         },
+        "global_namespace_import": {
+            "import_classes": true,
+            "import_constants": true,
+            "import_functions": true
+        },
         "clean_namespace": true,
+        "ordered_class_elements": {
+            "order": [
+                "use_trait",
+                "case",
+                "constant",
+                "constant_public",
+                "constant_protected",
+                "constant_private",
+                "property_public",
+                "property_protected",
+                "property_private",
+                "construct",
+                "destruct",
+                "magic",
+                "phpunit",
+                "method_abstract",
+                "method_public_static",
+                "method_public",
+                "method_protected_static",
+                "method_protected",
+                "method_private_static",
+                "method_private"
+            ],
+            "sort_algorithm": "none"
+        },
+        "ordered_interfaces": true,
+        "ordered_traits": true,
+        "protected_to_private": true,
+        "self_accessor": true,
+        "self_static_accessor": true,
+        "strict_comparison": true,
+        "no_useless_else": true,
         "combine_consecutive_issets": true,
         "combine_consecutive_unsets": true,
         "doctrine_annotation_indentation": true,
         "doctrine_annotation_spaces": true,
         "fully_qualified_strict_types": true,
         "function_typehint_space": true,
-        "global_namespace_import": true,
         "heredoc_indentation": true,
         "include": true,
         "lambda_not_used_import": true,

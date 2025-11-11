@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Actions\Rules\AnalizeAction;
 
 it('Action test', function (): void {

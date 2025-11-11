@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Category;
@@ -21,7 +23,7 @@ class RuleFactory extends Factory
             'title' => $this->faker->sentence(),
             'type' => $this->faker->randomElement(['free', 'premiun']),
             'downloads' => $this->faker->numberBetween(1, 5000),
-            'rating' => $this->faker->numberBetween(1, 3.5, 5),
+            'rating' => $this->faker->numberBetween(1, 3.5),
             'description' => $this->faker->paragraph(),
             'category_id' => Category::factory(),
             'status' => 'active',

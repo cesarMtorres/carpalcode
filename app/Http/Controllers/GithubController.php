@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use Laravel\Socialite\Facades\Socialite;
@@ -13,7 +15,7 @@ class GitHubController extends Controller
             ->redirect();
     }
 
-    public function callback()
+    public function callback(): \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
     {
         $githubUser = Socialite::driver('github')->user();
 
@@ -22,6 +24,6 @@ class GitHubController extends Controller
             'github_token' => encrypt($githubUser->token),
         ]);
 
-        return redirect()->route('projects.connect.success');
+        return to_route('projects.connect.success');
     }
 }

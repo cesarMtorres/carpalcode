@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Actions\Rules;
 
 use Exception;
@@ -23,7 +25,7 @@ class TryCode
             $message = 'Error on code';
         });
 
-        return compact('status', 'message');
+        return ['status' => $status, 'message' => $message];
     }
 
     // todo pasar la version de php
@@ -34,7 +36,7 @@ class TryCode
 
             $ast = $parser->parse($code);
 
-            if (empty($ast)) {
+            if ($ast === null || $ast === []) {
                 return [
                     'success' => false,
                     'output' => 'Código PHP inválido',
@@ -56,11 +58,11 @@ class TryCode
                 'result' => $result,
             ];
 
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
             return [
                 'success' => false,
                 'output' => '',
-                'error' => $e->getMessage(),
+                'error' => $exception->getMessage(),
             ];
         }
     }
